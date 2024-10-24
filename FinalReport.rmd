@@ -30,6 +30,9 @@ mydata <- na.omit(mydata)
 Is attitude toward capitol punishment (cappun) independent of race (race)?
 If not, then whose view differs from whom??
 
+$H_0$ there is no difference in attitude towards cappun based on race.          
+$H_A$ there is a difference in attitude towards cappun based on race.       
+
 # Methods
 
 <!--Decide on your methods:  use "variable analysis" or other appropriate descriptors.  Make sure to choose at least one graphical method and at least one numerical method. Discuss what data manipulations may be needed for example subsetting or other binning procedures and what sort of graphical displays and inferential tools will be used!-->
@@ -44,6 +47,13 @@ If not, then whose view differs from whom??
 
 <!--Graphical results here.  Make sure to show your code.  Provide appropriate labels for axes, giving units if possible, and provide a good title for the graph, too.  Use the graphical results to describe the patterns if any that exist in the data as focused toward the research question. Bottom line is to explain the features of the graph that are relevant to conforming or departing to what is expected by your null hypothesis !-->
 
+```{r}
+barchartGC(~race + cappun,data=mydata)
+barchartGC(~race + cappun,data=mydata, type="percent")
+
+```
+
+this barchart shows that majority of the whites and other races favor capital punishment while the blacks not so much. 
 
 
 ## Now with The Most data (fewer variables gives more data points)
@@ -55,7 +65,13 @@ If not, then whose view differs from whom??
 <!--Numerical results go here. Use the numerical results to describe the patterns if any that exist in the data as focused toward the research question!-->
 
 
+```{r}
+table1 <- xtabs(~race + cappun, data=mydata)
+rowPerc(table1)
+colPerc(table1)
+```
 
+the numerical descriptive results show that 65.1% of whites favor cappun while 34.9% of them oppose cappun. 42.6% of blacks favor cappun while the other 57.4% of blacks oppose cappun. and out of the other races 55.2% of them favor cappun while the 44.8% of them oppose cappun. the numerical results make it clear which race is most likely to favor cappun and which race is more likely to oppose cappun. 
 
 ## Now with More data
 
@@ -66,7 +82,13 @@ If not, then whose view differs from whom??
 <!--State hypothesis clearly.  Make sure your discussion of the inferential test covers all the aspects that the test output produces, such as test statistic, p-value etc.  Make a decision about the null hypothesis, explain the assumptions on which the selected test/procedure was based, and why the chosen procedure satisfys the assumptions and is appropriate to answer the research question!-->
 
 `
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
+chi-squared test gives us the p value which is < 2.2e-16. i should reject the null hypothesis since the p value is below 0.05 which means that there is a difference in attitudes toward cappun based on race according to the chi-squared test. the fisher's exact test also supports that race does influence attitudes towards cappun. 
 
 ## More data version
 
@@ -74,3 +96,8 @@ If not, then whose view differs from whom??
 # Discussion and Conclusion
 
 <!--Discussion and conclusion here.  If you found a relationship be sure to consider whether the relationship occurs because one of the variavbles causes the other, or whether they perhasps are related for some other reason.  Watch the chapter 6 videos from the GeorgeTown videos collection.!-->
+
+original question: Is attitude toward capitol punishment (cappun) independent of race (race)?
+If not, then whose view differs from whom??
+
+The chi-squared test and fishers exact test gives us clear evidence that race influences people's attitudes towards cappun. we see that whites usually favor cappun, blacks oppose cappun, and others are in the mix between favoring and opposing cappun. in conclusion this shows that race and attitude towards cappuna are related. 
